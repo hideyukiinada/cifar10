@@ -25,7 +25,7 @@ Image size: 32x32
 |k3f64x3, k3f128x3, k3f256x3, GAP, d10 + BN, Valid conv padding | 200 | 64 | 0.0058|79.57%| Linux | keras_8 ||
 |k3f64x3, k3f128x3, k3f256x3, GAP, d10 + BN, Same conv padding | 10 | 64 | 0.2647 |72.22%| Linux | keras_10 ||
 |k3f64, (resnet f64 block x n + f128 block x n + f256 block x n) (n=2), GAP, d10 + BN, Same conv padding | 2 | 64 | 0.7745 |72.94%| Linux | keras_9 ||
-|k3f64, (resnet f64 block x n + f128 block x n + f256 block x n) (n=2), GAP, d10 + BN, Same conv padding | 100 | 64 | 0.0052 |86.19%| Linux | keras_10 | categorical accuracy during training: 0.9982 |
+|k3f64, (resnet f64 block x n + f128 block x n + f256 block x n) (n=2), GAP, d10 + BN, Same conv padding | 100 | 64 | 0.0052 |86.19%| Linux | keras_11 | categorical accuracy during training: 0.9982 |
 
  k: Kernel size
  f: Number of filters
