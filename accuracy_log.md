@@ -21,11 +21,13 @@ Image size: 32x32
 |k3f64x3 , k3f128x3, d128, d10 + BN | 10 | 64 | 0.1864 |76.69%| Linux | keras_4 |
 |k3f64x3 , k3f128x3, k3f256x3, d128, d10 + BN | 10 | 64 | 0.3073 |77.92%| Linux | keras_5 |
 |k3f64x3 , k3f128x3, k3f256x3, d128, d10 + BN | 100 | 64 | 0.0168 |78.11%| Linux | keras_6 |
+|k3f64x3 , k3f128x3, k3f256x3, GAP, d10 + BN | 10 | 64 | 0.2777 |78.54%| Linux | keras_7 |
 
  k: Kernel size
  f: Number of filters
  d: Dense unit size
  BN: Batch norm added
- 
+ GAP: Global Average Pooling
+
 ## Machines used
 * Mac (OS:10.13.5, RAM: 16 GB, CPU: 2.6 GHz Intel Core i5, Python: 3.6.7) 
