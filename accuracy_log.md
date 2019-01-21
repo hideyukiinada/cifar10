@@ -26,8 +26,9 @@ Image size: 32x32
 |k3f64x3, k3f128x3, k3f256x3, GAP, d10 + BN, Same conv padding | 10 | 64 | 0.2647 |72.22%| Linux | keras_10 ||
 |k3f64, (resnet f64 block x n + f128 block x n + f256 block x n) (n=2), skip filter size=3, GAP, d10 + BN, Same conv padding | 2 | 64 | 0.7745 |72.94%| Linux | keras_9 ||
 |k3f64, (resnet f64 block x n + f128 block x n + f256 block x n) (n=2), skip filter size=3, GAP, d10 + BN, Same conv padding | 100 | 64 | 0.0052 |86.19%| Linux | keras_11 | categorical accuracy during training: 0.9982 |
-|k3f64, (resnet f64 block x n + f128 block x n + f256 block x n) (n=9), skip filter size=3, GAP, d10 + BN, Same conv padding | 100 | 64 | 0.0066 |87.13%| Linux | keras_12 | categorical accuracy during training: 0.9982 |
-|k3f64, (resnet f64 block x n + f128 block x n + f256 block x n) (n=2), skip filter size=1, GAP, d10 + BN, Same conv padding | 100 | 64 | 0.0059 |86.84%| Linux | keras_13 | categorical accuracy during training: 0.9982 |
+|k3f64, (resnet f64 block x n + f128 block x n + f256 block x n) (n=9), skip filter size=3, GAP, d10 + BN, Same conv padding | 100 | 64 | 0.0066 |87.13%| Linux | keras_12 |  |
+|k3f64, (resnet f64 block x n + f128 block x n + f256 block x n) (n=2), skip filter size=1, GAP, d10 + BN, Same conv padding | 100 | 64 | 0.0059 |86.84%| Linux | keras_13 |  |
+|k3f64, (resnet f64 block x n + f128 block x n + f256 block x n) (n=2), leakyReLU, skip filter size=1, GAP, d10 + BN, Same conv padding | 100 | 64 | 0.0087 |84.38%| Linux | keras_14 |  |
 
  k: Kernel size
  f: Number of filters
