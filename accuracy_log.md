@@ -14,15 +14,16 @@ Image size: 32x32
 
 |Type|Epoch|Batch size | Loss|Test Accuracy | Machine used | File name | 
 |---|---|---|---|---|---|---|
-|k3f8, k3f128, d128, d10 | 2 | 64 | 1.0543 | 63.89% | Mac | keras_baseline |
-|k3f8, k3f128, d128, d10 | 10 | 64 | 0.4196 | 69.21% | Mac | keras_2 |
-|k3f8, k3f128, d128, d10 + BN | 10 | 64 | 0.6458 |67.25%| Mac | keras_3 |
-|k3f64x3, k3f128x3, d128, d10 + BN | 10 | 64 | 0.1787 |76.84%| Mac | keras_4 |
-|k3f64x3, k3f128x3, d128, d10 + BN | 10 | 64 | 0.1864 |76.69%| Linux | keras_4 |
-|k3f64x3, k3f128x3, k3f256x3, d128, d10 + BN | 10 | 64 | 0.3073 |77.92%| Linux | keras_5 |
-|k3f64x3, k3f128x3, k3f256x3, d128, d10 + BN | 100 | 64 | 0.0168 |78.11%| Linux | keras_6 |
-|k3f64x3, k3f128x3, k3f256x3, GAP, d10 + BN | 10 | 64 | 0.2777 |78.54%| Linux | keras_7 |
-|k3f64x3, k3f128x3, k3f256x3, GAP, d10 + BN | 200 | 64 | 0.0058|79.57%| Linux | keras_8 |
+|k3f8, k3f128, d128, d10, Valid conv padding | 2 | 64 | 1.0543 | 63.89% | Mac | keras_baseline |
+|k3f8, k3f128, d128, d10, Valid conv padding | 10 | 64 | 0.4196 | 69.21% | Mac | keras_2 |
+|k3f8, k3f128, d128, d10 + BN, Valid conv padding | 10 | 64 | 0.6458 |67.25%| Mac | keras_3 |
+|k3f64x3, k3f128x3, d128, d10 + BN, Valid conv padding | 10 | 64 | 0.1787 |76.84%| Mac | keras_4 |
+|k3f64x3, k3f128x3, d128, d10 + BN, Valid conv padding | 10 | 64 | 0.1864 |76.69%| Linux | keras_4 |
+|k3f64x3, k3f128x3, k3f256x3, d128, d10 + BN, Valid conv padding | 10 | 64 | 0.3073 |77.92%| Linux | keras_5 |
+|k3f64x3, k3f128x3, k3f256x3, d128, d10 + BN, Valid conv padding | 100 | 64 | 0.0168 |78.11%| Linux | keras_6 |
+|k3f64x3, k3f128x3, k3f256x3, GAP, d10 + BN, Valid conv padding | 10 | 64 | 0.2777 |78.54%| Linux | keras_7 |
+|k3f64x3, k3f128x3, k3f256x3, GAP, d10 + BN, Valid conv padding | 200 | 64 | 0.0058|79.57%| Linux | keras_8 |
+|k3f64x3, k3f128x3, k3f256x3, GAP, d10 + BN, Same conv padding | 10 | 64 | 0.2647 |72.22%| Linux | keras_10 |
 
  k: Kernel size
  f: Number of filters
