@@ -30,6 +30,7 @@ Image size: 32x32
 |k3f64, (resnet f64 block x n + f128 block x n + f256 block x n) (n=2), skip filter size=1, GAP, d10 + BN, Same conv padding | 100 | 64 | 0.0059 |86.84%| Linux | keras_13 |  |
 |k3f64, (resnet f64 block x n + f128 block x n + f256 block x n) (n=2), leakyReLU, skip filter size=1, GAP, d10 + BN, Same conv padding | 100 | 64 | 0.0087 |84.38%| Linux | keras_14 |  |
 |k3f64, (resnet f64 block x n + f128 block x n + f256 block x n) (n=2), skip filter size=1, GAP, d10 + BN, Same conv padding | 100 | 128 | 0.0013 |86.70%| Linux | keras_15 | categorical_accuracy: 0.9996 |
+|k3f64, (resnet f64 block x n + f128 block x n + f256 block x n) (n=2), skip filter size=1, GAP, d10 + BN, Same conv padding, input centered at 0 | 100 | 128 | 0.0029 |85.61%| Linux | keras_16 | categorical_accuracy: 0.9990 |
 
  k: Kernel size
  f: Number of filters
