@@ -20,6 +20,7 @@ Image size: 32x32
 |k3f64x3 , k3f128x3, d128, d10 + BN | 10 | 64 | 0.1787 |76.84%| Mac | keras_4 |
 |k3f64x3 , k3f128x3, d128, d10 + BN | 10 | 64 | 0.1864 |76.69%| Linux | keras_4 |
 |k3f64x3 , k3f128x3, k3f256x3, d128, d10 + BN | 10 | 64 | 0.3073 |77.92%| Linux | keras_5 |
+|k3f64x3 , k3f128x3, k3f256x3, d128, d10 + BN | 100 | 64 | 0.0168 |78.11%| Linux | keras_6 |
 
  k: Kernel size
  f: Number of filters
