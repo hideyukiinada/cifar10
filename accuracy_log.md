@@ -31,6 +31,9 @@ Image size: 32x32
 |k3f64, (resnet f64 block x n + f128 block x n + f256 block x n) (n=2), leakyReLU, skip filter size=1, GAP, d10 + BN, Same conv padding | 100 | 64 | 0.0087 |84.38%| Linux | keras_14 |  |
 |k3f64, (resnet f64 block x n + f128 block x n + f256 block x n) (n=2), skip filter size=1, GAP, d10 + BN, Same conv padding | 100 | 128 | 0.0013 |86.70%| Linux | keras_15 | categorical_accuracy: 0.9996 |
 |k3f64, (resnet f64 block x n + f128 block x n + f256 block x n) (n=2), skip filter size=1, GAP, d10 + BN, Same conv padding, input centered at 0 | 100 | 128 | 0.0029 |85.61%| Linux | keras_16 | categorical_accuracy: 0.9990 |
+|k3f64, (resnet f64 block x n + f128 block x n + f256 block x n) (n=2), skip filter size=1, GAP, d10 + BN, Same conv padding, image augmentation | 2 | 128 | 0.8758 |40.34%| Linux | keras_17 | categorical_accuracy: 0.6917 |
+|k3f64, (resnet f64 block x n + f128 block x n + f256 block x n) (n=2), skip filter size=1, GAP, d10 + BN, Same conv padding, image augmentation | 10 | 128 | 0.3345 |55.13%| Linux | keras_18 | categorical_accuracy: 0.8835 |
+|k3f64, (resnet f64 block x n + f128 block x n + f256 block x n) (n=2), skip filter size=1, GAP, d10 + BN, Same conv padding, image augmentation (no feature centering/std) | 2 | 128 | 0.9000 |57.99%| Linux | keras_19 | categorical_accuracy: 0.6814  |
 
  k: Kernel size
  f: Number of filters
