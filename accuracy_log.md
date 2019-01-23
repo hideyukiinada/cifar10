@@ -41,6 +41,7 @@ Image size: 32x32
 |k3f64, (resnet f64 block x n + f128 block x n + f256 block x n) (n=20), skip filter size=1, GAP, d10 + BN, Same conv padding, image augmentation (no feature centering/std) | 100 | 64 | 0.0501  |91.06%| Linux | keras_24 | categorical_accuracy: 0.9830  |
 |k3f64, (resnet f64 block x n + f128 block x n + f256 block x n) (n=10), skip filter size=1, GAP, d10 + BN, Same conv padding, image augmentation (no feature centering/std) | 100 | 128 | 0.0320  |91.93%| Linux | keras_25 | categorical_accuracy: 0.9890  |
 |k3f64, (resnet f64 3l-block x n + f128 3l-block x n + f256 3l-block x n) (n=2), skip filter size=1, GAP, d10 + BN, Same conv padding, image augmentation (no feature centering/std) | 2 | 128 | 0.9970 | 55.46%| Linux | keras_26 | categorical_accuracy: 0.6464|
+|k3f64, (resnet f64 3l-block x n + f128 3l-block x n + f256 3l-block x n) (n=2), skip filter size=1, GAP, d10 + BN, Same conv padding, image augmentation (no feature centering/std) | 10 | 128 | 0.4199 | 74.51%| Linux | keras_27 | categorical_accuracy: 0.8554|
 
  k: Kernel size
  f: Number of filters
