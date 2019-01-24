@@ -8,6 +8,7 @@ CIFAR10 is a dataset that is used to test classification performance for images.
 |---|---|
 | Training set | 50000 |
 | Test set | 10000 |
+| Total | 60000 |
 
 One of the current checked-in scripts produced 91.93% accuracy against the test dataset.
 
