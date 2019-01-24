@@ -76,7 +76,7 @@ def train_and_predict():
     layer = ReLU()(layer)
 
     # 6
-    layer = Conv2D(filters=128, kernel_size=3, strides=2)(layer) # to 16x16
+    layer = Conv2D(filters=128, kernel_size=3, strides=2)(layer)
     layer = BatchNormalization()(layer)
     layer = ReLU()(layer)
 
@@ -91,7 +91,7 @@ def train_and_predict():
     layer = ReLU()(layer)
 
     # 9
-    layer = Conv2D(filters=256, kernel_size=3, strides=2)(layer) # to 8x8
+    layer = Conv2D(filters=256, kernel_size=3, strides=2)(layer)
     layer = BatchNormalization()(layer)
     layer = ReLU()(layer)
 
