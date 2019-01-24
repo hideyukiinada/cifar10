@@ -46,10 +46,10 @@ def train_and_predict():
 
     input_layer = Input(shape=(32, 32, 3))
     layer = Conv2D(filters=8, kernel_size=3, strides = 1, activation='relu')(input_layer)
-    layer = MaxPool2D(strides=2)(layer) # To 16x16
+    layer = MaxPool2D(strides=2)(layer)
 
     layer = Conv2D(filters=128, kernel_size=3, strides = 1, activation='relu')(layer)
-    layer = MaxPool2D(strides=2)(layer)  # To 8x8
+    layer = MaxPool2D(strides=2)(layer)
 
     layer = Flatten()(layer)
     layer = Dense(128, activation='relu')(layer)
