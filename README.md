@@ -1,7 +1,7 @@
 # cifar10
 Test various techniques to assess impact on CIFAR10 accuracy.
 
-One of the current checked-in scripts produced 91.18% accuracy against the test dataset.
+One of the current checked-in scripts produced 91.93% accuracy against the test dataset.
 
 ![Result](assets/images/accuracy_result.png)
 
