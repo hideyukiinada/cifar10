@@ -11,6 +11,7 @@ CIFAR10 is a dataset that is used to test and/or measure classification performa
 | Total | 60000 |
 
 Each image is
+
 | Attribute | Value |
 |---|---|
 | Height | 32 pixels |
