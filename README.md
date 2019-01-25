@@ -67,7 +67,7 @@ As I hadn't had a chance to actually implement ResNet in Keras before this proje
 In order to reach 90%, I decided to adopt data augmentation that was discussed in the paper which I skipped.  The paper discussed adding padding to the image to make it 40x40 pixels and randomly pick 32x32 pixels, but I decided to use [Keras's built-in data augmentation feature](https://keras.io/preprocessing/image/).  After realizing that enabling featurewise_center and featurewise_std_normalization don't work for this particular experiment, I turned them off and settled for horizontal & vertical offset, horizontal flip.  I didn't initially rotate the image, but switched to 15 degree-rotation towards the end. I was able to hit 91.93% in result #29 with the keras_25 script.  I wanted to hit the 92% mark, and tried a few more times, but I wasn't able to exceed this.
 
 ![Last ResNet block](assets/images/cifar10_last_block.png)
-#Last ResNet block
+Last ResNet block
 
 # Code
 All the code is available in this repo(https://github.com/hideyukiinada/cifar10/tree/master/project)
