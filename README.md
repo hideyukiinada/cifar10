@@ -27,5 +27,5 @@ I wanted to see how difficult it is to hit a 90% plus mark and what kind of tric
 
 ![Result](assets/images/accuracy_result.png)
 
-
-Please see [accuracy_log.md](accuracy_log.md) for accuracy result for each script in this repo.
+# Code
+All the code is available in this repo(https://github.com/hideyukiinada/cifar10/tree/master/project)
