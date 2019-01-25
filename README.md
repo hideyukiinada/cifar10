@@ -27,9 +27,14 @@ I wanted to see how difficult it is to hit a 90% plus mark and what kind of tric
 
 ![Result](assets/images/accuracy_result.png)
 
-# Phase 1 (result #1 - #4)
+# Phase 1 (result #1 - #4) : Best result = 69.21%
 I started off with a 2-conv layer and 2 dense layer architecture and got 63.89% which obviously is a very low result (Result #1).  I did a few more tries (keras_2 and keras_3 scripts) with this architecture and seeing that I wouldn't hit 90% and decided to add more conv layers.  At that point, I didn't even try with 100 epochs, and I tested the same architecture with 100 epochs later on (keras_2b) to write this post.  As I expected, accuracy against test data was 65.13% while training accuracy was 99.28% indicating a severe overfitting problem.
 
+# Phase 2 (result #5 - #13) : Best result = 79.57%
+I increased the number of conv layers to 6, and eventually to 9 in this phase.  Though I was able to reach 79.57% accuracy with result #12, the script ran 200 epochs, so I didn't think that accuracy would go up much more.  I thought that I'd need a different approach.
+
+# Phase 3 (result #14 - #20) : Best result = 87.13%
+I got an idea to use ResNet when I was reading CycleGAN implementation code (https://github.com/leehomyc/cyclegan-1/blob/master/model.py).  I looked for [the original paper of ResNet](https://arxiv.org/abs/1512.03385).  Section 4.2 of the paper discussed their approach for CIFAR-10 in depth, and I decided to base my implementation based on a subset of their approach. A subset means that I would use their network architecture, but not using their method of optimization, learning rate adjustment or data augmentation. or As I haven't actually implemented ResNet in Keras, I also used [Keras team's ResNet implementation code](https://github.com/keras-team/keras-applications/blob/master/keras_applications/resnet50.py) as my reference. This gave me boost close to 8% boost.
 
 # Code
 All the code is available in this repo(https://github.com/hideyukiinada/cifar10/tree/master/project)
