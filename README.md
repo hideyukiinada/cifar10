@@ -10,6 +10,13 @@ CIFAR10 is a dataset that is used to test and/or measure classification performa
 | Test set | 10000 |
 | Total | 60000 |
 
+Each image is
+| Attribute | Value |
+|---|---|
+| Height | 32 pixels |
+| Width | 32 pixels |
+| Channels | 3 |
+
 One of the current checked-in scripts produced 91.93% accuracy against the test dataset.
 
 ![Result](assets/images/accuracy_result.png)
