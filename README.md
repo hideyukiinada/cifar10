@@ -27,5 +27,7 @@ I wanted to see how difficult it is to hit a 90% plus mark and what kind of tric
 
 ![Result](assets/images/accuracy_result.png)
 
+I started off with a 2-conv layer and 2 dense layer architecture and got 63.89% which obviously is a very low result (Result #1).  I did a few more tries with this architecture and seeing that I wouldn't hit 90% and decided to add more conv layers.
+
 # Code
 All the code is available in this repo(https://github.com/hideyukiinada/cifar10/tree/master/project)
