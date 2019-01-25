@@ -1,5 +1,5 @@
 # Overview
-CIFAR-10 is not an easy dataset to classify.  Back in 2011, it was believed that [it would be hard to go above 80%](http://karpathy.github.io/2011/04/27/manually-classifying-cifar10/).  Since then, technology has advanced, and in 2018, a paper was published in which the accuracy was listed as 98.52%.  Despite this, it is a still much harder dataset than MNIST for which reaching 90% accuracy is really easy. 
+CIFAR-10 is not an easy dataset to classify.  Back in 2011, it was believed that [it would be hard to go above 80%](http://karpathy.github.io/2011/04/27/manually-classifying-cifar10/).  Since then, technology has advanced and accuracy has been going up. In 2018, a paper was published in which the accuracy was listed as 98.52%.  Despite this, it is a still much harder dataset than MNIST for which reaching 90% accuracy is really easy. 
 I wanted to see how difficult it is to hit a 90% plus mark and what kind of tricks I need to employ.  I started with a plain-vanilla convnet and continued tweaking with different type of techniques and architectures.  Eventually, I was able to hit 91.93% accuracy against the test dataset.  In this article, I would like to share techniques that I used.
 
 # About CIFAR-10
@@ -22,9 +22,9 @@ Each image is
 Each image is classified into one of the 10 classes as listed in the [CIFAR-10 homepage](https://www.cs.toronto.edu/~kriz/cifar.html).
 
 # Objectives
-CIFAR-10 is not an easy dataset to classify.  Back in 2011, it was believed that [it would be hard to go above 80%](http://karpathy.github.io/2011/04/27/manually-classifying-cifar10/).  Since then, technology has advanced, and [a Kaggle leaderboard in 2015](https://www.kaggle.com/c/cifar-10/leaderboard) shows 22 contentants beat 90% accuracy.  In 2018, [a paper] (https://arxiv.org/abs/1805.09501) was published in which the accuracy was listed as 98.52%.  Despite this, it is a still much harder dataset than MNIST for which reaching 90% accuracy is really easy.
+CIFAR-10 is not an easy dataset to classify.  [a Kaggle leaderboard in 2015](https://www.kaggle.com/c/cifar-10/leaderboard) shows 22 contestants beat 90% accuracy so I thought that 90% would be a good bar for me to target for now as trying to go for the state of art 98.52% accuracy number in a [2018 a paper] (https://arxiv.org/abs/1805.09501) would be very difficult.
 
-I wanted to see how difficult it is to hit a 90% plus mark and what kind of tricks I need to employ.  I started with a plain-vanilla convnet and continued tweaking with different type of techniques and architectures.  Eventually, I was able to hit 91.93% accuracy against the test dataset.
+Also, I thought it would be fun to figure out what's the icing on the cake vs stuff that makes a significant difference.  I made 33 attempts with 29 different scripts each with different configurations, some of which are small some of which are major.  I started with a plain-vanilla convnet and continued tweaking with different type of techniques and architectures.  Eventually, I was able to hit 91.93% accuracy against the test dataset.
 
 ![Result](assets/images/accuracy_result.png)
 
