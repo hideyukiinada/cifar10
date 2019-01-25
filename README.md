@@ -18,6 +18,8 @@ Each image is
 | Width | 32 pixels |
 | Channels | 3 |
 
+Each image is classified into one of the 10 classes as listed in the [CIFAR-10 homepage](https://www.cs.toronto.edu/~kriz/cifar.html).
+
 One of the current checked-in scripts produced 91.93% accuracy against the test dataset.
 
 ![Result](assets/images/accuracy_result.png)
