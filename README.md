@@ -67,19 +67,19 @@ All the code is available in this repo(https://github.com/hideyukiinada/cifar10/
 # Appendix
 ## Note on table headers
 
-|||
+|Column name| Note|
 |---|---|
-|Result||	
-|Test Accuracy	||
-|Number of layers||
-|Conv layers	||
-|Dense layers||
-|GAP	||
-|Batch norm||
-|Conv padding||
-|Input value shifted||
-|ReLU type||
-|resnet n value||
+|Result| Index number of the result|	
+|Test Accuracy	| Number of correct predictions out of 10,000 images in test dataset|
+|Number of layers| Total number of layers including conv layers, dense layers, a global average pooling layer|
+|Conv layers	|Number of convolution layers|
+|Dense layers|Number of dense layers (aka fully-connected layers)|
+|GAP	|Global average pooling layer|
+|Batch norm|Use of batch normalization|
+|Conv padding|Type of padding used for conv-layers. Valid means no padding was used.  Same means padding was used.|
+|Input value shifted|Whether to shift the input image value to center to 0 or not|
+|ReLU type|Type of ReLU used in activation|
+|resnet n value|Each ResNet block contains two conv layers in the model used in this experiment. There is a three different types of ResNet used in the paper.  Namely 64 filter output block, 128 filter output block, 256 filter output block.  N value determines how many of each block was used.  For example, if n=2, then two 64 filter blocks, two 128 filter blocks, two 256 filter blocks will be used, which is 6 filter blocks or 12 conv layers for ResNet blocks. There is one additional conv layer that is applied to input, so the total number of conv layers is 1 + 6n. |
 |resnet skip filter size||
 |Image augmentation||
 |Center||
