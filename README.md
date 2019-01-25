@@ -84,14 +84,14 @@ All the code is available in this repo(https://github.com/hideyukiinada/cifar10/
 |Image augmentation| Whether data augmentation was used or not|
 |Center| featurewise_center.  Please refer to [Keras reference](https://keras.io/preprocessing/image/) |
 |Std normalization| featurewise_std_normalization. Please refer to [Keras reference](https://keras.io/preprocessing/image/)|
-|rotation| Degrees of image rotation |
-|height shift| Range of horiozontal shift |
-|widthshift| Range of vertical shift |
-|horizontal flip| Whether to randomly flip image horizontally or not|
-|vertical flip|Whether to randomly flip image vertically or not|
-|Epoch||
-|Batch size||
-|Training Loss||
-|Machine used||
-|File name||
-|Run||
+|Rotation| Degrees of image rotation |
+|Height shift| Range of horiozontal shift |
+|Width shift| Range of vertical shift |
+|Horizontal flip| Whether to randomly flip image horizontally or not|
+|Vertical flip|Whether to randomly flip image vertically or not|
+|Epoch|Number of epochs|
+|Batch size|Size of each batch|
+|Training Loss|Loss reported for the last batch of training|
+|Machine used|Machine used for training and prediction|
+|File name|Name of the script used|
+|Run|Some scripts were run more than once, and this number indicates the number|
