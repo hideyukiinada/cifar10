@@ -1,8 +1,8 @@
-# cifar10
+# cifar-10
 Test various techniques to assess impact on CIFAR10 accuracy.
 
 # Introduction
-CIFAR10 is a dataset that is used to test and/or measure classification performance of a machine learning architecture for images.  The dataset consists of:
+CIFAR-10 is a dataset that is used to test and/or measure classification performance of a machine learning architecture for images.  The dataset consists of:
 
 | Description | Number of images |
 |---|---|
