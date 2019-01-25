@@ -22,9 +22,9 @@ Each image is
 Each image is classified into one of the 10 classes as listed in the [CIFAR-10 homepage](https://www.cs.toronto.edu/~kriz/cifar.html).
 
 # Objectives
-CIFAR-10 is not an easy dataset to classify.  [a Kaggle leaderboard in 2015](https://www.kaggle.com/c/cifar-10/leaderboard) shows 22 contestants beat 90% accuracy so I thought that 90% would be a good bar for me to target for now as trying to go for the state of art 98.52% accuracy number in a [2018 a paper] (https://arxiv.org/abs/1805.09501) would be very difficult.
+CIFAR-10 is not an easy dataset to classify.  [a Kaggle leaderboard in 2015](https://www.kaggle.com/c/cifar-10/leaderboard) shows 22 contestants beat 90% accuracy so I thought that 90% would be a good bar for me to target for now as trying to go for the state of art 98.52% accuracy number in a [2018 a paper](https://arxiv.org/abs/1805.09501) would be very difficult or require more resources/effort.
 
-Also, I thought it would be fun to figure out what's the icing on the cake vs stuff that makes a significant difference.  I made 33 attempts with 29 different scripts each with different configurations, some of which are small some of which are major.  I started with a plain-vanilla convnet and continued tweaking with different type of techniques and architectures.  Eventually, I was able to hit 91.93% accuracy against the test dataset.
+I also thought it would be fun to figure out what ML techniques are the icing on the cake vs stuff that makes a significant difference in terms of accuracy.  I made 33 attempts with 29 different scripts each with different configurations, some of which are small some of which are major.  I started with a plain-vanilla convnet and continued tweaking with different type of techniques and architectures.  Eventually, I was able to hit 91.93% accuracy against the test dataset.
 
 ![Result](assets/images/accuracy_result.png)
 
