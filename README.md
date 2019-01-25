@@ -1,4 +1,4 @@
-# cifar-10
+# CIFAR-10
 Test various techniques to assess impact on CIFAR10 accuracy.
 
 # Introduction
