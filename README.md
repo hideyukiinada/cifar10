@@ -56,7 +56,7 @@ I increased the number of conv layers to 6, and eventually to 9 in this phase.  
 |Result #|#14 - #20|
 
 I got an idea to use ResNet when I was reading CycleGAN implementation code (https://github.com/leehomyc/cyclegan-1/blob/master/model.py).  I looked for [the original paper of ResNet](https://arxiv.org/abs/1512.03385).  Section 4.2 of the paper discussed their approach for CIFAR-10 in depth, and I decided to implement based on a subset of their approach. A subset means that I would use their network architecture, but not using their method of optimization, learning rate adjustment or data augmentation. 
-As I haven't actually implemented ResNet in Keras, I also used [Keras team's ResNet implementation code](https://github.com/keras-team/keras-applications/blob/master/keras_applications/resnet50.py) as my reference. This gave me a boost that was close to 8%.
+As I hadn't had a chance to actually implement ResNet in Keras before this project, I also used [Keras team's ResNet implementation code](https://github.com/keras-team/keras-applications/blob/master/keras_applications/resnet50.py) as my reference. This gave me a boost that was close to 8%.
 
 ## Phase 4. ResNet blocks with data augmentation
 
