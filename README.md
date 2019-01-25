@@ -36,7 +36,7 @@ Please see the Appendix for the names of each column.
 |---|---|
 |Result #|#1-#4|
 
-I started off with a 2-conv layer and 2 dense layer architecture and got 63.89% which obviously is a very low result (Result #1).  I did a few more tries (keras_2 and keras_3 scripts) with this architecture and seeing that I wouldn't hit 90% and decided to add more conv layers.  At that point, I didn't even try with 100 epochs, and I tested the same architecture with 100 epochs later on (keras_2b) to write this post.  As I expected, accuracy against test data was 65.13% while training accuracy was 99.28% indicating a severe overfitting problem.
+I started off with a 2-conv layer and 2 dense layer architecture and got 63.89% which obviously is a very low result (Result #1).  I did a few more tries (keras_2 and keras_3 scripts) with this architecture and seeing that I wouldn't be able to hit 90% with this approach, I decided to add more conv layers.  At that point, I didn't even try 100 epochs. Later on I tested the same architecture with 100 epochs (keras_2b) to write this post.  As I expected, accuracy against test data was 65.13% while training accuracy was 99.28% indicating a severe overfitting problem.
 
 ## Phase 2.  6 to 9 conv layer network
 
