@@ -29,6 +29,7 @@ I wanted to see how difficult it is to hit a 90% plus mark and what kind of tric
 
 ## Phase 1 Plain-vanilla conv net (result #1 - #4) : Best result = 69.21%
 
+|Info|Value|
 |---|---|
 |Best result|69.21%|
 |Result|#1-#4|
