@@ -85,8 +85,8 @@ All the code is available in this repo(https://github.com/hideyukiinada/cifar10/
 |Conv padding|Type of padding used for conv-layers. Valid means no padding was used.  Same means padding was used.|
 |Input value shifted|Whether to shift the input image value to center to 0 or not|
 |ReLU type|Type of ReLU used in activation|
-|ResNet n value|Each ResNet block contains two conv layers in the model used in this experiment. There are three different types of ResNet used in the paper.  Namely 64 filter output block, 128 filter output block, 256 filter output block.  N value determines how many of each block was used.  For example, if n=2, then two 64 filter blocks, two 128 filter blocks, two 256 filter blocks will be used, which is 6 filter blocks or 12 conv layers for ResNet blocks. There is one additional conv layer that is applied to input, so the total number of conv layers is 1 + 6n. |
-|resnet skip filter size| When you downsample feature map in a ResNet block, you also need to downsample and adjust the channel number of the shortcut connection.  This was done via a conv layer, and this column value shows whether the 1x1 kernel was used or 3x3 kernel was used|
+|ResNet n value|Each ResNet block contains two conv layers in the model used in this experiment. There are three different types of ResNet used in the paper.  Namely 64 filter output block, 128 filter output block, 256 filter output block.  N value determines how many of each block were used.  For example, if n=2, then two 64 filter blocks, two 128 filter blocks, two 256 filter blocks were used, which translates to 6 filter blocks or 12 conv layers. There is one additional conv layer that is applied to input, so the total number of conv layers is 1 + 6n. |
+|resnet skip filter size| When you downsample a feature map in a ResNet block, you also need to downsample and adjust the channel number of the shortcut connection.  This was done via a conv layer, and this column value shows whether the 1x1 kernel was used or 3x3 kernel was used|
 |Image augmentation| Whether data augmentation was used or not|
 |Center| featurewise_center.  Please refer to [Keras reference](https://keras.io/preprocessing/image/) |
 |Std normalization| featurewise_std_normalization. Please refer to [Keras reference](https://keras.io/preprocessing/image/)|
@@ -100,7 +100,7 @@ All the code is available in this repo(https://github.com/hideyukiinada/cifar10/
 |Training Loss|Loss reported for the last batch of training|
 |Machine used|Machine used for training and prediction|
 |File name|Name of the script used|
-|Run|Some scripts were run more than once, and this number indicates the number|
+|Run #|Some scripts were run more than once, and this number indicates the number|
 
 ## Machines used
 * Linux (OS: Ubuntu 18.10, RAM: 48 GB, CPU: 3.4 GHz Intel Core i5-7500, GPU: NVIDIA GeForce GTX 1080, Python: 3.6.7, TensorFlow-GPU: 1.12.0, Keras: 2.2.4)
