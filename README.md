@@ -97,3 +97,7 @@ All the code is available in this repo(https://github.com/hideyukiinada/cifar10/
 |Machine used|Machine used for training and prediction|
 |File name|Name of the script used|
 |Run|Some scripts were run more than once, and this number indicates the number|
+
+## Machines used
+* Linux (OS: Ubuntu 18.10, RAM: 48 GB, CPU: 3.4 GHz Intel Core i5-7500, GPU: NVIDIA GeForce GTX 1080, Python: 3.6.7)
+* Mac (OS:10.13.5, RAM: 16 GB, CPU: 2.6 GHz Intel Core i5, Python: 3.6.7)
