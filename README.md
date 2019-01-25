@@ -22,7 +22,7 @@ Each image is
 Each image is classified into one of the 10 classes as listed in the [CIFAR-10 homepage](https://www.cs.toronto.edu/~kriz/cifar.html).
 
 # Objectives
-CIFAR-10 is not an easy dataset to classify.  [a Kaggle leaderboard in 2015](https://www.kaggle.com/c/cifar-10/leaderboard) shows 22 contestants beat 90% accuracy so I thought that 90% would be a good bar for me to target for now as trying to go for the state of art 98.52% accuracy number in a [2018 a paper](https://arxiv.org/abs/1805.09501) would be very difficult or require more resources/effort.
+In term of an accuracy goal, [a Kaggle leaderboard in 2015](https://www.kaggle.com/c/cifar-10/leaderboard) shows 22 contestants beat 90% accuracy so I thought that 90% would be a good bar for me to target for now as trying to go for the state of art 98.52% accuracy number in a [2018 a paper](https://arxiv.org/abs/1805.09501) would be very difficult or require more resources/effort.
 
 I also thought it would be fun to figure out what ML techniques are the icing on the cake vs stuff that makes a significant difference in terms of accuracy.  I made 33 attempts with 29 different scripts each with different configurations, some of which are small some of which are major.  I started with a plain-vanilla convnet and continued tweaking with different type of techniques and architectures.  Eventually, I was able to hit 91.93% accuracy against the test dataset.
 
@@ -82,7 +82,7 @@ All the code is available in this repo(https://github.com/hideyukiinada/cifar10/
 |Conv padding|Type of padding used for conv-layers. Valid means no padding was used.  Same means padding was used.|
 |Input value shifted|Whether to shift the input image value to center to 0 or not|
 |ReLU type|Type of ReLU used in activation|
-|ResNet n value|Each ResNet block contains two conv layers in the model used in this experiment. There is a three different types of ResNet used in the paper.  Namely 64 filter output block, 128 filter output block, 256 filter output block.  N value determines how many of each block was used.  For example, if n=2, then two 64 filter blocks, two 128 filter blocks, two 256 filter blocks will be used, which is 6 filter blocks or 12 conv layers for ResNet blocks. There is one additional conv layer that is applied to input, so the total number of conv layers is 1 + 6n. |
+|ResNet n value|Each ResNet block contains two conv layers in the model used in this experiment. There are three different types of ResNet used in the paper.  Namely 64 filter output block, 128 filter output block, 256 filter output block.  N value determines how many of each block was used.  For example, if n=2, then two 64 filter blocks, two 128 filter blocks, two 256 filter blocks will be used, which is 6 filter blocks or 12 conv layers for ResNet blocks. There is one additional conv layer that is applied to input, so the total number of conv layers is 1 + 6n. |
 |resnet skip filter size| When you downsample feature map in a ResNet block, you also need to downsample and adjust the channel number of the shortcut connection.  This was done via a conv layer, and this column value shows whether the 1x1 kernel was used or 3x3 kernel was used|
 |Image augmentation| Whether data augmentation was used or not|
 |Center| featurewise_center.  Please refer to [Keras reference](https://keras.io/preprocessing/image/) |
