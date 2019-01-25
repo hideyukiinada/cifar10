@@ -63,3 +63,35 @@ In order to reach 90%, I decided to adopt data augmentation that was discussed i
 
 # Code
 All the code is available in this repo(https://github.com/hideyukiinada/cifar10/tree/master/project)
+
+# Appendix
+## Note on table headers
+
+|||
+|---|---|
+|Result||	
+|Test Accuracy	||
+|Number of layers||
+|Conv layers	||
+|Dense layers||
+|GAP	||
+|Batch norm||
+|Conv padding||
+|Input value shifted||
+|ReLU type||
+|resnet n value||
+|resnet skip filter size||
+|Image augmentation||
+|Center||
+|Std normalization||
+|rotation||
+|height shift||
+|widthshift||
+|horizontal flip||
+|vertical flip||
+|Epoch||
+|Batch size||
+|Training Loss||
+|Machine used||
+|File name||
+|Run||
