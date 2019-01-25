@@ -27,6 +27,8 @@ I wanted to see how difficult it is to hit a 90% plus mark and what kind of tric
 
 ![Result](assets/images/accuracy_result.png)
 
+Please see the Appendix for the names of each column.
+
 ## Phase 1. Two conv layer network
 
 |Best result|69.21%|
@@ -65,7 +67,7 @@ In order to reach 90%, I decided to adopt data augmentation that was discussed i
 All the code is available in this repo(https://github.com/hideyukiinada/cifar10/tree/master/project)
 
 # Appendix
-## Note on table headers
+## Note on column names
 
 |Column name| Note|
 |---|---|
@@ -79,7 +81,7 @@ All the code is available in this repo(https://github.com/hideyukiinada/cifar10/
 |Conv padding|Type of padding used for conv-layers. Valid means no padding was used.  Same means padding was used.|
 |Input value shifted|Whether to shift the input image value to center to 0 or not|
 |ReLU type|Type of ReLU used in activation|
-|resnet n value|Each ResNet block contains two conv layers in the model used in this experiment. There is a three different types of ResNet used in the paper.  Namely 64 filter output block, 128 filter output block, 256 filter output block.  N value determines how many of each block was used.  For example, if n=2, then two 64 filter blocks, two 128 filter blocks, two 256 filter blocks will be used, which is 6 filter blocks or 12 conv layers for ResNet blocks. There is one additional conv layer that is applied to input, so the total number of conv layers is 1 + 6n. |
+|ResNet n value|Each ResNet block contains two conv layers in the model used in this experiment. There is a three different types of ResNet used in the paper.  Namely 64 filter output block, 128 filter output block, 256 filter output block.  N value determines how many of each block was used.  For example, if n=2, then two 64 filter blocks, two 128 filter blocks, two 256 filter blocks will be used, which is 6 filter blocks or 12 conv layers for ResNet blocks. There is one additional conv layer that is applied to input, so the total number of conv layers is 1 + 6n. |
 |resnet skip filter size| When you downsample feature map in a ResNet block, you also need to downsample and adjust the channel number of the shortcut connection.  This was done via a conv layer, and this column value shows whether the 1x1 kernel was used or 3x3 kernel was used|
 |Image augmentation| Whether data augmentation was used or not|
 |Center| featurewise_center.  Please refer to [Keras reference](https://keras.io/preprocessing/image/) |
