@@ -16,6 +16,7 @@ Image size: 32x32
 |---|---|---|---|---|---|---|---|
 |k3f8, k3f128, d128, d10, Valid conv padding | 2 | 64 | 1.0543 | 63.89% | Mac | keras_baseline ||
 |k3f8, k3f128, d128, d10, Valid conv padding | 10 | 64 | 0.4196 | 69.21% | Mac | keras_2 ||
+|k3f8, k3f128, d128, d10, Valid conv padding | 100 | 64 | 0.0269  | 65.13% | Linux | keras_2b |categorical_accuracy: 0.9928|
 |k3f8, k3f128, d128, d10 + BN, Valid conv padding | 10 | 64 | 0.6458 |67.25%| Mac | keras_3 ||
 |k3f64x3, k3f128x3, d128, d10 + BN, Valid conv padding | 10 | 64 | 0.1787 |76.84%| Mac | keras_4 ||
 |k3f64x3, k3f128x3, d128, d10 + BN, Valid conv padding | 10 | 64 | 0.1864 |76.69%| Linux | keras_4 ||
