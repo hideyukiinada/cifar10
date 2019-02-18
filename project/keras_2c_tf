@@ -1,0 +1,150 @@
+#!/usr/bin/env python
+"""
+Example code for testing various techniques to assess impact on CIFAR10 accuracy.
+
+__author__ = "Hide Inada"
+__copyright__ = "Copyright 2018, Hide Inada"
+__license__ = "The MIT License"
+__email__ = "hideyuki@gmail.com"
+"""
+
+import os
+import logging
+from pathlib import Path
+import numpy as np
+import tensorflow as tf
+import keras
+
+log = logging.getLogger(__name__)
+logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))  # Change the 2nd arg to INFO to suppress debug logging
+
+IGNORE_WEIGHT = True
+WEIGHTS_DIR = "/tmp/cifar10/2btf/cp"
+
+EPOCHS = 100
+BATCH_SIZE = 64
+
+
+def train_and_predict():
+    """Train the model and predict.
+
+    This file downloads dataset via Keras util.
+    """
+
+    (x_train, y_train), (x_test, y_test) = keras.datasets.cifar10.load_data()
+
+    x_train = x_train / 255.0
+    x_test = x_test / 255.0
+
+    y_train_oh = keras.utils.to_categorical(y_train, 10) * 1.0
+    y_test_oh = keras.utils.to_categorical(y_test, 10)
+
+    x_placeholder = tf.placeholder(tf.float32, shape=(None, 32, 32, 3))
+    y_placeholder = tf.placeholder(tf.float32, shape=(None, 10))
+
+    # Set up network
+    with tf.variable_scope("cv1") as scope:
+        weights = tf.get_variable("weights", [3, 3, 3, 8], dtype=tf.float32,
+                                  initializer=tf.contrib.layers.xavier_initializer(seed=0))
+        bias = tf.get_variable("bias", [8], dtype=tf.float32)
+
+        z = tf.add(tf.nn.conv2d(x_placeholder, weights, strides=[1, 1, 1, 1], padding='VALID'), bias)
+        activation = tf.nn.relu(z, name=scope.name)
+
+        p1 = tf.nn.max_pool(activation, ksize=(1, 2, 2, 1), strides=[1, 2, 2, 1], padding='VALID')
+
+    with tf.variable_scope("cv2") as scope:
+        weights = tf.get_variable("weights", [3, 3, 8, 128], dtype=tf.float32,
+                                  initializer=tf.contrib.layers.xavier_initializer(seed=0))
+        bias = tf.get_variable("bias", [128], dtype=tf.float32)
+        z = tf.add(tf.nn.conv2d(p1, weights, strides=[1, 1, 1, 1], padding='VALID'), bias)
+        activation = tf.nn.relu(z, name=scope.name)
+        p2 = tf.nn.max_pool(activation, ksize=(1, 2, 2, 1), strides=[1, 2, 2, 1], padding='VALID')
+
+    flat = tf.contrib.layers.flatten(p2)
+
+    fc1 = tf.layers.dense(
+        flat,
+        128,
+        activation=tf.nn.relu,
+        use_bias=True,
+        kernel_initializer=tf.contrib.layers.xavier_initializer(seed=0))
+
+    fc2 = tf.layers.dense(
+        fc1,
+        10,
+        activation=None,
+        use_bias=True,
+        kernel_initializer=tf.contrib.layers.xavier_initializer(seed=0))
+
+    y_hat_softmax = tf.nn.softmax(fc2)
+
+    # Set up optimizer & cost
+    optimizer = tf.train.AdamOptimizer(learning_rate=0.001, beta1=0.9, beta2=0.999)
+    y_placeholder = tf.stop_gradient(y_placeholder)  # Do not backpropagate labels in softmax_cross_entropy_with_logits_v2
+    cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(logits=fc2, labels=y_placeholder))
+    objective = optimizer.minimize(cost)
+
+    init_op = tf.global_variables_initializer()  # Set up operator to assign all init values to variables
+
+    saver = tf.train.Saver()
+
+    with tf.Session() as s:
+
+        if Path(WEIGHTS_DIR).exists() and IGNORE_WEIGHT is False:
+            saver.restore(s, str(Path(WEIGHTS_DIR) / Path("model.ckpt")))
+            log.info("Loaded weight from: %s" % str(Path(WEIGHTS_DIR) / Path("model.ckpt")))
+        else:
+            log.fatal("Weights not found.")
+            s.run(init_op)
+
+        dataset_size = y_train.shape[0]
+
+        for i in range(EPOCHS):
+            next_k = 0
+            loop_count = int(
+                dataset_size / BATCH_SIZE)  # for m = 5, batch_size = 2, this results in [0, 1]
+            current_batch_size = 0
+
+            for j in range(loop_count):
+                current_batch_size = BATCH_SIZE
+                k = j * current_batch_size
+                next_k = k + current_batch_size
+
+                o, c = s.run([objective, cost],
+                             feed_dict={x_placeholder: x_train[k:next_k], y_placeholder: y_train_oh[k:next_k]})
+
+                log.info("Epoch: %d.  Batch: %d Cost:%f, Batch size: %d" % (i, j, c, current_batch_size))
+
+            # remainder
+            last_batch_size = x_train.shape[0] - next_k
+            if last_batch_size > 0:
+                k = next_k
+
+                o, c = s.run([objective, cost],
+                             feed_dict={x_placeholder: x_train[k:k + last_batch_size],
+                                        y_placeholder: y_train_oh[k:k + last_batch_size]})
+
+                log.info("Epoch: %d.  Batch: %d Cost:%f, Batch size: %d" % (i, j, c, last_batch_size))
+
+        log.info("Training completed.")
+
+        y_hat_test_one_hot = s.run(y_hat_softmax, feed_dict={x_placeholder: x_test})
+
+        total_size = y_hat_test_one_hot.shape[0]
+        y_hat_int = np.argmax(y_hat_test_one_hot, axis=1)  # to int from one-hot vector
+        y_hat_int = y_hat_int.reshape((y_hat_int.shape[0], 1))
+
+        matched_indices = (y_hat_int == y_test)
+        matched_count = y_test[matched_indices].shape[0]
+        log.info(
+            "Matched: %d out of Total: %d (%f percent)" % (matched_count, total_size, matched_count * 100 / total_size))
+
+
+def main():
+    """Defines an application's main functionality"""
+    train_and_predict()
+
+
+if __name__ == "__main__":
+    main()
