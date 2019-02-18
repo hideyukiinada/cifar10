@@ -97,7 +97,7 @@ def train_and_predict():
             saver.restore(s, str(Path(WEIGHTS_DIR) / Path("model.ckpt")))
             log.info("Loaded weight from: %s" % str(Path(WEIGHTS_DIR) / Path("model.ckpt")))
         else:
-            log.fatal("Weights not found.")
+            log.info("Weights not found.")
             s.run(init_op)
 
         dataset_size = x_train.shape[0]

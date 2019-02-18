@@ -19,28 +19,17 @@ log = logging.getLogger(__name__)
 logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))  # Change the 2nd arg to INFO to suppress debug logging
 
 IGNORE_WEIGHT = True
-WEIGHTS_DIR = "/tmp/cifar10/2btf/cp"
+WEIGHTS_DIR = "/tmp/cifar10/3tf/cp"
 
 EPOCHS = 100
 BATCH_SIZE = 64
 
+def build_network(is_training=True):
 
-def train_and_predict():
-    """Train the model and predict.
-
-    This file downloads dataset via Keras util.
-    """
-
-    (x_train, y_train), (x_test, y_test) = keras.datasets.cifar10.load_data()
-
-    x_train = x_train / 255.0
-    x_test = x_test / 255.0
-
-    y_train_oh = keras.utils.to_categorical(y_train, 10) * 1.0
-    y_test_oh = keras.utils.to_categorical(y_test, 10)
+    tf.reset_default_graph()
 
     x_placeholder = tf.placeholder(tf.float32, shape=(None, 32, 32, 3))
-    y_placeholder = tf.placeholder(tf.float32, shape=(None, 10))
+    y_placeholder = tf.placeholder(tf.int32, shape=(None))
 
     # Set up network
     with tf.variable_scope("cv1") as scope:
@@ -49,7 +38,10 @@ def train_and_predict():
         bias = tf.get_variable("bias", [8], dtype=tf.float32)
 
         z = tf.add(tf.nn.conv2d(x_placeholder, weights, strides=[1, 1, 1, 1], padding='VALID'), bias)
-        activation = tf.nn.relu(z, name=scope.name)
+
+        bn = tf.layers.batch_normalization(z, training=is_training)
+
+        activation = tf.nn.relu(bn, name=scope.name)
 
         p1 = tf.nn.max_pool(activation, ksize=(1, 2, 2, 1), strides=[1, 2, 2, 1], padding='VALID')
 
@@ -58,7 +50,10 @@ def train_and_predict():
                                   initializer=tf.contrib.layers.xavier_initializer(seed=0))
         bias = tf.get_variable("bias", [128], dtype=tf.float32)
         z = tf.add(tf.nn.conv2d(p1, weights, strides=[1, 1, 1, 1], padding='VALID'), bias)
-        activation = tf.nn.relu(z, name=scope.name)
+
+        bn = tf.layers.batch_normalization(z, training=is_training)
+
+        activation = tf.nn.relu(bn, name=scope.name)
         p2 = tf.nn.max_pool(activation, ksize=(1, 2, 2, 1), strides=[1, 2, 2, 1], padding='VALID')
 
     flat = tf.contrib.layers.flatten(p2)
@@ -81,13 +76,34 @@ def train_and_predict():
 
     # Set up optimizer & cost
     optimizer = tf.train.AdamOptimizer(learning_rate=0.001, beta1=0.9, beta2=0.999)
-    y_placeholder = tf.stop_gradient(y_placeholder)  # Do not backpropagate labels in softmax_cross_entropy_with_logits_v2
-    cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(logits=fc2, labels=y_placeholder))
-    objective = optimizer.minimize(cost)
+    cost = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits=fc2, labels=y_placeholder))
+
+    update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
+    with tf.control_dependencies(update_ops):
+        objective = optimizer.minimize(cost)
 
     init_op = tf.global_variables_initializer()  # Set up operator to assign all init values to variables
-
     saver = tf.train.Saver()
+    return init_op, cost, objective, x_placeholder, y_placeholder, y_hat_softmax, saver
+
+
+def train_and_predict():
+    """Train the model and predict.
+
+    This file downloads dataset via Keras util.
+    """
+
+    (x_train, y_train), (x_test, y_test) = keras.datasets.cifar10.load_data()
+
+    x_train = x_train / 255.0
+    x_test = x_test / 255.0
+
+    y_train = y_train.reshape(y_train.shape[0])
+
+    y_train_oh = keras.utils.to_categorical(y_train, 10) * 1.0
+    y_test_oh = keras.utils.to_categorical(y_test, 10)
+
+    init_op, cost, objective, x_placeholder, y_placeholder, y_hat_softmax, saver = build_network()
 
     with tf.Session() as s:
 
@@ -95,10 +111,9 @@ def train_and_predict():
             saver.restore(s, str(Path(WEIGHTS_DIR) / Path("model.ckpt")))
             log.info("Loaded weight from: %s" % str(Path(WEIGHTS_DIR) / Path("model.ckpt")))
         else:
-            log.info("Weights not found.")
             s.run(init_op)
 
-        dataset_size = y_train.shape[0]
+        dataset_size = x_train.shape[0]
 
         for i in range(EPOCHS):
             next_k = 0
@@ -112,7 +127,7 @@ def train_and_predict():
                 next_k = k + current_batch_size
 
                 o, c = s.run([objective, cost],
-                             feed_dict={x_placeholder: x_train[k:next_k], y_placeholder: y_train_oh[k:next_k]})
+                             feed_dict={x_placeholder: x_train[k:next_k], y_placeholder: y_train[k:next_k]})
 
                 log.info("Epoch: %d.  Batch: %d Cost:%f, Batch size: %d" % (i, j, c, current_batch_size))
 
@@ -123,11 +138,28 @@ def train_and_predict():
 
                 o, c = s.run([objective, cost],
                              feed_dict={x_placeholder: x_train[k:k + last_batch_size],
-                                        y_placeholder: y_train_oh[k:k + last_batch_size]})
+                                        y_placeholder: y_train[k:k + last_batch_size]})
 
                 log.info("Epoch: %d.  Batch: %d Cost:%f, Batch size: %d" % (i, j, c, last_batch_size))
 
+
         log.info("Training completed.")
+
+        if Path(WEIGHTS_DIR).exists() is False:
+            Path(WEIGHTS_DIR).mkdir(parents=True, exist_ok=True)
+
+        weight_path = saver.save(s, str(Path(WEIGHTS_DIR) / Path("model.ckpt")))
+        log.info("Saved model in: %s" % weight_path)
+
+    init_op, cost, objective, x_placeholder, y_placeholder, y_hat_softmax, saver = build_network(is_training=False)
+
+    with tf.Session() as s:
+        try:
+            saver.restore(s, str(Path(WEIGHTS_DIR) / Path("model.ckpt")))
+            log.info("Loaded weight from: %s" % str(Path(WEIGHTS_DIR) / Path("model.ckpt")))
+        except:
+            log.fatal("Exception while restoring weight.")
+            raise ValueError("Exception while restoring weight.")
 
         y_hat_test_one_hot = s.run(y_hat_softmax, feed_dict={x_placeholder: x_test})
 
