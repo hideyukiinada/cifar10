@@ -18,9 +18,10 @@ import keras
 log = logging.getLogger(__name__)
 logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))  # Change the 2nd arg to INFO to suppress debug logging
 
+IGNORE_WEIGHT = True
 WEIGHTS_DIR = "/tmp/cifar10/2btf/cp"
 
-EPOCHS = 1
+EPOCHS = 100
 BATCH_SIZE = 64
 
 
@@ -89,7 +90,7 @@ def train_and_predict():
 
     with tf.Session() as s:
 
-        if Path(WEIGHTS_DIR).exists():
+        if Path(WEIGHTS_DIR).exists() and IGNORE_WEIGHT is False:
             saver.restore(s, str(Path(WEIGHTS_DIR) / Path("model.ckpt")))
             log.info("Loaded weight from: %s" % str(Path(WEIGHTS_DIR) / Path("model.ckpt")))
         else:
@@ -130,9 +131,10 @@ def train_and_predict():
         y_hat_test_one_hot = s.run(y_hat_softmax, feed_dict={x_placeholder: x_test})
 
         total_size = y_hat_test_one_hot.shape[0]
-        y_hat_test_one_hot_int = np.argmax(y_hat_test_one_hot, axis=1)  # to int from one-hot vector
+        y_hat_int = np.argmax(y_hat_test_one_hot, axis=1)  # to int from one-hot vector
+        y_hat_int = y_hat_int.reshape((y_hat_int.shape[0], 1))
 
-        matched_indices = (y_hat_test_one_hot_int == y_test)
+        matched_indices = (y_hat_int == y_test)
         matched_count = y_test[matched_indices].shape[0]
         log.info(
             "Matched: %d out of Total: %d (%f percent)" % (matched_count, total_size, matched_count * 100 / total_size))
