@@ -23,7 +23,7 @@ BASE_DIR = "/tmp/cifar10/11tf"
 WEIGHTS_DIR_PATH = Path(BASE_DIR) / Path("cp")
 TF_LOG_DIR_PATH = Path(BASE_DIR) / Path("log")
 
-EPOCHS = 10
+EPOCHS = 100
 BATCH_SIZE = 64
 
 
