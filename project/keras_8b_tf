@@ -19,11 +19,11 @@ log = logging.getLogger(__name__)
 logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))  # Change the 2nd arg to INFO to suppress debug logging
 
 IGNORE_WEIGHT = True
-BASE_DIR = "/tmp/cifar10/8tfb"
+BASE_DIR = "/tmp/cifar10/8btf"
 WEIGHTS_DIR_PATH = Path(BASE_DIR) / Path("cp")
 TF_LOG_DIR_PATH = Path(BASE_DIR) / Path("log")
 
-EPOCHS = 1
+EPOCHS = 100
 BATCH_SIZE = 64
 
 
