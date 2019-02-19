@@ -97,11 +97,13 @@ def n_resnet_blocks(tens, block_name, num_blocks, input_filters, output_filters,
         tens = single_resnet_block(tens, block_name + "_1", input_filters, output_filters, kernel_size=kernel_size,
                                    downsample=True, is_training=is_training)
         for i in range(num_blocks - 1):
-            tens = single_resnet_block(tens, block_name + "_" + str(i+2), output_filters, output_filters, kernel_size=kernel_size,
+            tens = single_resnet_block(tens, block_name + "_" + str(i + 2), output_filters, output_filters,
+                                       kernel_size=kernel_size,
                                        is_training=is_training)
     else:
         for i in range(num_blocks):
-            tens = single_resnet_block(tens, block_name + "_" + str(i+1), output_filters, output_filters, kernel_size=kernel_size,
+            tens = single_resnet_block(tens, block_name + "_" + str(i + 1), output_filters, output_filters,
+                                       kernel_size=kernel_size,
                                        is_training=is_training)
 
     return tens
