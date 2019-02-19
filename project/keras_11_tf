@@ -3,7 +3,7 @@
 Example code for testing various techniques to assess impact on CIFAR10 accuracy.
 
 __author__ = "Hide Inada"
-__copyright__ = "Copyright 2018, Hide Inada"
+__copyright__ = "Copyright 2019, Hide Inada"
 __license__ = "The MIT License"
 __email__ = "hideyuki@gmail.com"
 """
@@ -23,13 +23,14 @@ BASE_DIR = "/tmp/cifar10/11tf"
 WEIGHTS_DIR_PATH = Path(BASE_DIR) / Path("cp")
 TF_LOG_DIR_PATH = Path(BASE_DIR) / Path("log")
 
-EPOCHS = 1
+EPOCHS = 10
 BATCH_SIZE = 64
 
 
 def single_conv_block(tens, block_name, input_filters, output_filters, kernel_size=3, padding="SAME", strides=1,
-               is_training=True):
-    with tf.variable_scope(block_name+"_cv") as scope:
+                      is_training=True):
+    scope_name = block_name + "_cv"
+    with tf.variable_scope(scope_name) as scope:
         weights = tf.get_variable("weights", [kernel_size, kernel_size, input_filters, output_filters],
                                   dtype=tf.float32,
                                   initializer=tf.contrib.layers.xavier_initializer(seed=0))
@@ -43,9 +44,12 @@ def single_conv_block(tens, block_name, input_filters, output_filters, kernel_si
 
         return activation
 
-def single_conv_block_no_activation(tens, block_name, input_filters, output_filters, kernel_size=3, padding="SAME", strides=1,
-               is_training=True):
-    with tf.variable_scope(block_name+"_cv") as scope:
+
+def single_conv_block_no_activation(tens, block_name, input_filters, output_filters, kernel_size=3, padding="SAME",
+                                    strides=1,
+                                    is_training=True):
+    scope_name = block_name + "_cv"
+    with tf.variable_scope(scope_name) as scope:
         weights = tf.get_variable("weights", [kernel_size, kernel_size, input_filters, output_filters],
                                   dtype=tf.float32,
                                   initializer=tf.contrib.layers.xavier_initializer(seed=0))
@@ -57,33 +61,48 @@ def single_conv_block_no_activation(tens, block_name, input_filters, output_filt
 
         return bn
 
-def single_resnet_block(tens, block_name, input_filters=None, output_filters=None, kernel_size=None, downsample=False, is_training=True):
+
+def single_resnet_block(tens, block_name, input_filters=None, output_filters=None, kernel_size=None, downsample=False,
+                        is_training=True):
     original_tens = tens
 
+    conv_block_name = block_name + "_1"
     if downsample:
-        original_tens = single_conv_block_no_activation(tens, block_name+"_1_skip", input_filters=input_filters, output_filters=output_filters, kernel_size=3, strides=2, is_training=is_training)
-        tens = single_conv_block(tens, block_name+"_1", input_filters=input_filters, output_filters=output_filters, kernel_size=kernel_size, strides=2, is_training=is_training)
-    else:
-        tens = single_conv_block(tens, block_name+"_1", input_filters=input_filters, output_filters=output_filters, kernel_size=kernel_size, strides=1, is_training=is_training)
+        # if downsample, use the the number of filters for this block (input_filters)
+        original_tens = single_conv_block_no_activation(tens, block_name + "_1_skip", input_filters=input_filters,
+                                                        output_filters=output_filters, kernel_size=3, strides=2,
+                                                        is_training=is_training)
 
-    tens = single_conv_block_no_activation(tens, block_name+"_2", input_filters=input_filters, output_filters=output_filters, kernel_size=kernel_size, strides=1, is_training=is_training)
+        tens = single_conv_block(tens, conv_block_name, input_filters=input_filters, output_filters=output_filters,
+                                 kernel_size=kernel_size, strides=2, is_training=is_training)
+    else:
+        tens = single_conv_block(tens, conv_block_name, input_filters=output_filters, output_filters=output_filters,
+                                 kernel_size=kernel_size, strides=1, is_training=is_training)
+
+    conv_block_name = block_name + "_2"
+    tens = single_conv_block_no_activation(tens, conv_block_name, input_filters=output_filters,
+                                           output_filters=output_filters, kernel_size=kernel_size, strides=1,
+                                           is_training=is_training)
 
     tens = tf.add(tens, original_tens)
 
-    tens = tf.nn.relu(tens, name=block_name+"_relu")
+    tens = tf.nn.relu(tens, name=block_name + "_relu")
 
     return tens
 
 
-def n_resnet_blocks(num_blocks, tens, block_name, input_filters, output_filters, kernel_size=None, downsample=False, is_training=True):
-
+def n_resnet_blocks(tens, block_name, num_blocks, input_filters, output_filters, kernel_size=None, downsample=False,
+                    is_training=True):
     if downsample:
-        tens = single_resnet_block(tens, block_name, input_filters, output_filters, kernel_size=kernel_size, downsample=True, is_training=is_training)
-        for i in range(num_blocks-1):
-            tens = single_resnet_block(tens, block_name, output_filters, output_filters, kernel_size=kernel_size, is_training=is_training)
+        tens = single_resnet_block(tens, block_name + "_1", input_filters, output_filters, kernel_size=kernel_size,
+                                   downsample=True, is_training=is_training)
+        for i in range(num_blocks - 1):
+            tens = single_resnet_block(tens, block_name + "_" + str(i+2), output_filters, output_filters, kernel_size=kernel_size,
+                                       is_training=is_training)
     else:
         for i in range(num_blocks):
-            tens = single_resnet_block(tens, block_name, output_filters, output_filters, kernel_size=kernel_size, is_training=is_training)
+            tens = single_resnet_block(tens, block_name + "_" + str(i+1), output_filters, output_filters, kernel_size=kernel_size,
+                                       is_training=is_training)
 
     return tens
 
@@ -95,11 +114,15 @@ def build_network(is_training=True):
     y_placeholder = tf.placeholder(tf.int32, shape=(None))
 
     input_tens = x_placeholder
-    tens = single_conv_block(input_tens, "Initial_conv_block", input_filters = 3, output_filters = 64, kernel_size=3, strides=1, is_training=is_training)
+    tens = single_conv_block(input_tens, "Initial_conv_block", input_filters=3, output_filters=64, kernel_size=3,
+                             strides=1, is_training=is_training)
 
-    tens = n_resnet_blocks(2, "64_block", tens, input_filters = 64, output_filters=64, kernel_size=3, is_training=is_training)
-    tens = n_resnet_blocks(2, "128_block", tens, input_filters = 64, output_filters=128, kernel_size=3, downsample=True, is_training=is_training)
-    tens = n_resnet_blocks(2, "256_block", tens, input_filters = 128, output_filters=256, kernel_size=3, downsample=True, is_training=is_training)
+    tens = n_resnet_blocks(tens, "64_block", 2, input_filters=64, output_filters=64, kernel_size=3,
+                           is_training=is_training)
+    tens = n_resnet_blocks(tens, "128_block", 2, input_filters=64, output_filters=128, kernel_size=3, downsample=True,
+                           is_training=is_training)
+    tens = n_resnet_blocks(tens, "256_block", 2, input_filters=128, output_filters=256, kernel_size=3, downsample=True,
+                           is_training=is_training)
 
     tens = tf.reduce_mean(tens, axis=[1, 2])  # global average pooling
 
@@ -122,7 +145,7 @@ def build_network(is_training=True):
 
     with tf.variable_scope("gs") as scope:
         global_step = tf.train.get_or_create_global_step()
-        inc_gs = tf.assign(global_step , global_step  + 1)
+        inc_gs = tf.assign(global_step, global_step + 1)
 
     tf.summary.scalar('Cost', cost)
     merged = tf.summary.merge_all()
@@ -183,7 +206,8 @@ def train(x_train, y_train, x_test, y_test):
                 next_k = k + current_batch_size
 
                 merged_result, _, gs, o, c = s.run([merged, inc_gs, global_step, objective, cost],
-                             feed_dict={x_placeholder: x_train[k:next_k], y_placeholder: y_train[k:next_k]})
+                                                   feed_dict={x_placeholder: x_train[k:next_k],
+                                                              y_placeholder: y_train[k:next_k]})
 
                 tensorboard_writer.add_summary(merged_result, gs)
 
@@ -195,8 +219,8 @@ def train(x_train, y_train, x_test, y_test):
                 k = next_k
 
                 merged_result, _, gs, o, c = s.run([merged, inc_gs, global_step, objective, cost],
-                             feed_dict={x_placeholder: x_train[k:k + last_batch_size],
-                                        y_placeholder: y_train[k:k + last_batch_size]})
+                                                   feed_dict={x_placeholder: x_train[k:k + last_batch_size],
+                                                              y_placeholder: y_train[k:k + last_batch_size]})
 
                 tensorboard_writer.add_summary(merged_result, gs)
                 log.info("[%d] Epoch: %d.  Batch: %d Cost:%f, Batch size: %d" % (gs, i, j, c, last_batch_size))
@@ -211,7 +235,8 @@ def train(x_train, y_train, x_test, y_test):
 
 
 def predict(x_test, y_test):
-    init_op, cost, objective, x_placeholder, y_placeholder, y_hat_softmax, saver, merged, inc_gs, global_step = build_network(is_training=False)
+    init_op, cost, objective, x_placeholder, y_placeholder, y_hat_softmax, saver, merged, inc_gs, global_step = build_network(
+        is_training=False)
 
     with tf.Session() as s:
         try:
