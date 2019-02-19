@@ -20,12 +20,9 @@ logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))  # Change the 2nd 
 
 IGNORE_WEIGHT = True
 WEIGHTS_DIR = "/tmp/cifar10/8tf/cp"
-
-EPOCHS = 1
+EPOCHS = 200
 BATCH_SIZE = 64
 
-#MODE="TRAIN"
-MODE="TEST"
 
 def conv_block(block_input, block_name, kernel_size, input_filters, output_filters, padding="SAME", strides=1,
                is_training=True):
@@ -63,9 +60,7 @@ def build_network(is_training=True):
     tens = conv_block(tens, "cv8", 3, 256, 256, padding="VALID", strides=1, is_training=is_training)
     tens = conv_block(tens, "cv9", 3, 256, 256, padding="VALID", strides=2, is_training=is_training)
 
-    tens = tf.reduce_mean(tens, axis=[1,2]) # global average pooling
-
-    #flat = tf.contrib.layers.flatten(tens)
+    tens = tf.reduce_mean(tens, axis=[1, 2])  # global average pooling
 
     tens = tf.layers.dense(
         tens,
@@ -169,7 +164,7 @@ def predict(x_test, y_test):
             raise ValueError("Exception while restoring weight.")
 
         dataset_size = x_test.shape[0]
-        y_hat_test_one_hot = np.zeros((dataset_size, 10))
+        y_hat_test_one_hot = np.full((dataset_size, 10), -1)
 
         for i in range(EPOCHS):
             next_k = 0
@@ -189,7 +184,8 @@ def predict(x_test, y_test):
             if last_batch_size > 0:
                 k = next_k
 
-                y_hat_test_one_hot[k:k + last_batch_size] = s.run(y_hat_softmax, feed_dict={x_placeholder: x_test[k:k + last_batch_size]})
+                y_hat_test_one_hot[k:k + last_batch_size] = s.run(y_hat_softmax, feed_dict={
+                    x_placeholder: x_test[k:k + last_batch_size]})
 
     total_size = y_hat_test_one_hot.shape[0]
     y_hat_int = np.argmax(y_hat_test_one_hot, axis=1)  # to int from one-hot vector
