@@ -166,29 +166,29 @@ def predict(x_test, y_test):
         dataset_size = x_test.shape[0]
 
         y_hat_list = list()
-        for i in range(EPOCHS):
-            next_k = 0
-            loop_count = int(
-                dataset_size / BATCH_SIZE)  # for m = 5, batch_size = 2, this results in [0, 1]
-            current_batch_size = 0
 
-            for j in range(loop_count):
-                current_batch_size = BATCH_SIZE
-                k = j * current_batch_size
-                next_k = k + current_batch_size
+        next_k = 0
+        loop_count = int(
+            dataset_size / BATCH_SIZE)  # for m = 5, batch_size = 2, this results in [0, 1]
+        current_batch_size = 0
 
-                y_hat_batch = s.run(y_hat_softmax, feed_dict={x_placeholder: x_test[k:next_k]})
-                y_hat_list.append(y_hat_batch)
+        for j in range(loop_count):
+            current_batch_size = BATCH_SIZE
+            k = j * current_batch_size
+            next_k = k + current_batch_size
 
-            # remainder
-            last_batch_size = x_test.shape[0] - next_k
-            if last_batch_size > 0:
-                k = next_k
+            y_hat_batch = s.run(y_hat_softmax, feed_dict={x_placeholder: x_test[k:next_k]})
+            y_hat_list.append(y_hat_batch)
 
-                y_hat_batch = s.run(y_hat_softmax, feed_dict={
-                    x_placeholder: x_test[k:k + last_batch_size]})
+        # remainder
+        last_batch_size = x_test.shape[0] - next_k
+        if last_batch_size > 0:
+            k = next_k
 
-                y_hat_list.append(y_hat_batch)
+            y_hat_batch = s.run(y_hat_softmax, feed_dict={
+                x_placeholder: x_test[k:k + last_batch_size]})
+
+            y_hat_list.append(y_hat_batch)
 
     y_hat = np.concatenate(y_hat_list)
 
