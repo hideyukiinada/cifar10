@@ -5,6 +5,12 @@ By Hide Inada
 CIFAR-10 is not an easy dataset to classify.  Back in 2011, it was believed that [it would be hard to go above 80%](http://karpathy.github.io/2011/04/27/manually-classifying-cifar10/).  Since then, technology has advanced and accuracy has been going up. In 2018, a paper was published in which the accuracy was listed as 98.52%.  Despite this, it is a still much harder dataset than MNIST for which reaching 90% accuracy is really easy. 
 I wanted to see how difficult it is to hit a 90% plus mark and what kind of tricks I need to employ.  I started with a plain-vanilla convnet and continued tweaking with different type of techniques and architectures.  Eventually, I was able to hit 91.93% accuracy against the test dataset.  In this article, I would like to share techniques that I used.
 
+# Update on Feb 20, 2019
+I added a set of scripts that use TensorFlow directly except for the data loading part.
+They are all prefixed with an underscore tf.
+They are still named with "keras_" to indicate which keras scripts have similar (not necessarily identical) architecture.
+I stopped experiment once I hit 91.63% accuracy with https://github.com/hideyukiinada/cifar10/blob/master/project/keras_21e_tf. 
+
 # About CIFAR-10
 CIFAR-10 is a dataset that is used to test and/or measure classification performance of a machine learning architecture for images.  The dataset consists of:
 
