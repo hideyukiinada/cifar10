@@ -9,7 +9,7 @@ I wanted to see how difficult it is to hit a 90% plus mark and what kind of tric
 I added a set of scripts that use TensorFlow directly except for the data loading part.
 They are all prefixed with an underscore tf.
 They are still named with "keras_" to indicate which keras scripts have similar (not necessarily identical) architecture.
-The goal of me writing these scripts was to make sure that I am using the TensorFlow API correctly, and I wanted to get the comparable result with Keras.  Since the best accuracy with Keras was 91.93%, I stopped this experiment once I hit 91.63% accuracy with https://github.com/hideyukiinada/cifar10/blob/master/project/keras_21e_tf.  Therefore I expect that the number will go up if I spend more time tweaking the architecture and/or techniques.
+The goal of writing these scripts in this second phase was to make sure that I am using the TensorFlow API correctly, and I wanted to get the comparable result with Keras.  Since the best accuracy with Keras was 91.93%, I stopped this experiment once I hit 91.63% accuracy with https://github.com/hideyukiinada/cifar10/blob/master/project/keras_21e_tf.  Therefore I expect that the number will go up if I spend more time tweaking the architecture and/or techniques.
 
 # About CIFAR-10
 CIFAR-10 is a dataset that is used to test and/or measure classification performance of a machine learning architecture for images.  The dataset consists of:
